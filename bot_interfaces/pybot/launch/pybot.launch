@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="robot_name" default="pybot" />
+  <arg name="config_file" default="$(find pybot)/param/pybot.yaml" />
+
+  <group ns="$(arg robot_name)">
+    <node pkg="pybot" name="pybot_python" type="pybot_python">
+      <rosparam command="load" file="$(arg config_file)" />
+    </node>
+  </group>
+
+</launch>

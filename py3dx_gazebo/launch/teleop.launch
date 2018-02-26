@@ -1,0 +1,21 @@
+<launch>
+  <arg name="robot_name" value="r1" />
+  <arg name="joy_dev" value="/dev/input/js0" />
+
+  <group ns="$(arg robot_name)">
+    <node pkg="joy" type="joy_node" name="joy_node">
+      <param name="dev" value="$(arg joy_dev)" />
+    </node>
+    <node pkg="teleop_twist_joy" type="teleop_node" name="teleop_node">
+      <param name="axis_linear" value="1" />
+      <param name="scale_linear" value="0.7" />
+      <param name="scale_linear_turbo" value="1.5" />
+
+      <param name="axis_angular" value="0" />
+      <param name="scale_angular" value="0.4" />
+
+      <param name="enable_button" value="4" />
+      <param name="enable_turbo_button" value="2" />
+    </node>
+  </group>
+</launch>

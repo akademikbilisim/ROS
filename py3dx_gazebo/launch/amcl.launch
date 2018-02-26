@@ -1,0 +1,26 @@
+<launch>
+
+    <arg name="robot_name" default="r1" />
+
+    <arg name="initial_pose_x"  default="0.0"/>
+    <arg name="initial_pose_y"  default="0.0"/>
+    <arg name="initial_pose_a"  default="0.0"/>
+
+    <arg name="robot_position" default="-x $(arg initial_pose_x) -y $(arg initial_pose_y) -z 0.01 -R 0 -P 0 -Y $(arg initial_pose_a)" />
+
+    <node pkg="map_server" type="map_server" name="map_server"
+      args="$(find py3dx_gazebo)/maps/map.yaml">
+    
+    
+    </node>
+    <!-- Robot with diff drive -->
+    <group ns="$(arg robot_name)">
+        <include file="$(find py3dx_gazebo)/launch/includes/navigation/amcl.launch.xml">
+            <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="initial_pose_x"  default="$(arg initial_pose_x)"/>
+            <arg name="initial_pose_y"  default="$(arg initial_pose_y)"/>
+            <arg name="initial_pose_a"  default="$(arg initial_pose_a)"/>
+        </include>
+    </group>
+
+</launch>

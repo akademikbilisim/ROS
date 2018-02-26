@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="pioneer3dx" >
+
+  <xacro:arg name="has_cam" default="true"/>
+
+  <!-- Import Rviz colors -->
+  <xacro:include filename="$(find py3dx_gazebo)/xacro/materials.xacro" />
+
+  <!-- Import robot -->
+  <xacro:include filename="$(find py3dx_gazebo)/xacro/p3dx/pioneer3dx_body.xacro"/>
+  <xacro:pioneer3dx_body name="chassis" parent="base_link" meshes="package://py3dx_gazebo/meshes/p3dx"/>
+
+  <!-- Laser  -->
+  <xacro:include filename="$(find py3dx_gazebo)/xacro/laser/hokuyo.xacro"/>
+  <xacro:laser name="front_laser" parent="chassis" xyz="0.0 0.0 0.27" rpy="0 0 0" meshes="package://py3dx_gazebo/meshes/laser"/>
+
+
+  <xacro:include filename="$(find py3dx_gazebo)/xacro/camera/camera.xacro"/>
+  <xacro:if value="$(arg has_cam)">
+    <xacro:cam name="front_camera" parent="chassis" xyz="0 0 0.5" rpy="0 0 0" />
+  </xacro:if>
+</robot>

@@ -1,0 +1,10 @@
+<launch>
+
+    <arg name="robot_name" default="r1" />
+    <group ns="$(arg robot_name)">
+      <include file="$(find py3dx_gazebo)/launch/includes/navigation/move_base.launch.xml">
+        <arg name="robot_name"  value="$(arg robot_name)" />
+      </include>
+    </group>
+
+</launch>

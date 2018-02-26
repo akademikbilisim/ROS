@@ -1,0 +1,88 @@
+#!/usr/bin/env python2
+from pybot import Pybot, Helpers
+from geometry_msgs.msg import Point
+import rospy
+import math
+
+
+class PID():
+    def __init__(self, p=None, i=None, d=None):
+        self.p = p 
+        self.i = i
+        self.d = d
+
+        self.p_term = 0.0
+        self.i_term = 0.0
+        self.d_term = 0.0
+
+    def clear(self):
+        self.p_term = 0.0
+        self.i_term = 0.0
+        self.d_term = 0.0
+
+
+def go_to_point(robot_pose, goal, pid):
+    robot_point = Point()
+    robot_point.x = robot_pose.x
+    robot_point.y = robot_pose.y
+    distance, angle = Helpers.calculate_differance(
+        robot_point, goal
+        )
+    error_angle = angle - robot_pose.theta
+    error_angle = math.atan2(
+            math.sin(error_angle),
+            math.cos(error_angle)
+            )
+    angular = error_angle * pid.p
+
+    distance = distance if distance > 0.1 else 0.0
+    linear = 0.5 if distance > 0.5 else distance * 0.5
+    if distance == 0.0:
+        return None, None, pid 
+    else:
+        return linear, angular, pid
+
+
+
+def main():
+    rospy.init_node("pybot_python")
+
+    cmd_vel_topic = rospy.get_param("~topics/cmd_vel", "cmd_vel")
+    scan_topic = rospy.get_param("~topics/scan", "front_laser/scan")
+    odom_topic = rospy.get_param("~topics/odom", "odom")
+
+    pid = PID()
+
+    pid.p = rospy.get_param("~pid/p",1)
+    pid.i = rospy.get_param("~pid/i",1)
+    pid.d = rospy.get_param("~pid/d",1)
+    
+    my_robot = Pybot(
+            cmd_vel_topic=cmd_vel_topic, 
+            odom_topic=odom_topic, 
+            scan_topic=scan_topic
+            )
+
+    goal_point = Point()
+    goal_point.x = 4 
+    goal_point.y = 4 
+    rate = rospy.Rate(10)
+
+    while not rospy.is_shutdown():
+        linear, angular, pid = go_to_point(
+                my_robot.get_pose_2d(),
+                goal_point,
+                pid 
+                ) 
+        if linear is None or angular is None:
+            pid.clear()
+            my_robot.set_speed(0, 0)
+            break
+        else:
+            my_robot.set_speed(linear, angular)
+        
+        rate.sleep()
+
+
+if __name__ == "__main__":
+    main()
