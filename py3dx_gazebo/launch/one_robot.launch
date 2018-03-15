@@ -9,6 +9,7 @@
     <node pkg="map_server" type="map_server" name="map_server" args="$(find py3dx_gazebo)/maps/test_building.yaml" />
 
     <include file="$(find py3dx_gazebo)/launch/includes/one_robot.launch.xml">
+        <arg name="has_cam" value="true" />
         <arg name="robot_name" value="r1" />
         <arg name="initial_pose_x"  default="0.0"/>
         <arg name="initial_pose_y"  default="-0.5"/>

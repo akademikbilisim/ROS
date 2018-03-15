@@ -11,6 +11,7 @@
     <arg name="localization" default="true" />
     <arg name="move_base" default="true" />
     <arg name="has_cam" default="false" />
+    <arg name="has_ball" default="false" />
  
     <!-- Robot with diff drive -->
     <group ns="$(arg robot_name)">
@@ -18,6 +19,7 @@
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="robot_position" value="$(arg robot_position)" />
             <arg name="has_cam" value="$(arg has_cam)" />
+            <arg name="has_ball" value="$(arg has_ball)" />
         </include>
         <group if="$(arg localization)">
             <include file="$(find py3dx_gazebo)/launch/includes/navigation/amcl.launch.xml">

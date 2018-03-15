@@ -19,4 +19,10 @@
   <xacro:if value="$(arg has_cam)">
     <xacro:cam name="front_camera" parent="chassis" xyz="0 0 0.5" rpy="0 0 0" />
   </xacro:if>
+
+  <xacro:include filename="$(find py3dx_gazebo)/xacro/ball/ball.xacro"/>
+  <xacro:if value="$(arg has_ball)">
+    <xacro:ball name="ball" parent="chassis" xyz="0 0 0.5" rpy="0 0 0" />
+  </xacro:if>
+
 </robot>
