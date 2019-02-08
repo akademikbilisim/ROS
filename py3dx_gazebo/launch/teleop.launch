@@ -1,6 +1,6 @@
 <launch>
-  <arg name="robot_name" value="r1" />
-  <arg name="joy_dev" value="/dev/input/js0" />
+  <arg name="robot_name" default="r1" />
+  <arg name="joy_dev" default="/dev/input/js0" />
 
   <group ns="$(arg robot_name)">
     <node pkg="joy" type="joy_node" name="joy_node">
