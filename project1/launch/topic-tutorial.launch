@@ -1,0 +1,16 @@
+<launch>
+
+  <arg name="robot_name" default="$(optenv ROBOT_NAME ab2019)"/>
+
+  <node type="publisher.py" pkg="project1" name="publisher"
+    output="screen">
+    <param type="string" value="emircem"/>
+  </node>
+
+  <node type="subscriber.py" pkg="project1" name="subscriber"
+    output="screen"/>
+
+  <node type="argexample.py" pkg="project1" name="argexample"
+    args="$(arg robot_name)" output="screen"/>
+
+</launch>
