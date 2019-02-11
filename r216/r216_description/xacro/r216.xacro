@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<robot name="r216" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="height" value="0.5"/>
+  <xacro:property name="PI" value="3.141592653589793" />
+  <xacro:include filename="$(find r216_description)/xacro/r216.gazebo" />
+
+  <link name="world"/>
+
+
+  <joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0.0 0.0 ${height/2}" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="0.10 0.10 ${height}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 ${height/2}" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <box size="0.10 0.10 ${height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"
+                          ixy="0.0"  ixz="0.0"
+                                     iyz="0.0"/>
+    </inertial>
+  </link>
+  
+  <joint name="joint1" type="continuous">
+    <parent link="base_link"/>
+    <child link="arm1"/>
+    <origin xyz="0 0 ${height}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.7"/>
+  </joint>
+
+  <link name="arm1">
+    <visual>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 ${PI/2} 0.0"/>
+      <geometry>
+        <box size="0.10 0.10 ${height}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 0.0" rpy="0.0 ${PI/2} 0.0"/>
+      <geometry>
+        <box size="0.10 0.10 ${height}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"
+                          ixy="0.0"  ixz="0.0"
+                                     iyz="0.0"/>
+    </inertial>
+  </link>
+
+
+
+
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+	</transmission>
+</robot>

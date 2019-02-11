@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+  </include>
+
+  <param name="robot_description" 
+    command="$(find xacro)/xacro --inorder $(find r216_description)/xacro/r216.xacro" />
+
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" 
+    respawn="false" output="screen"
+    args="-urdf -model r216 -param robot_description"/> 
+
+</launch>
