@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find r216_gazebo)/launch/r216_gazebo.launch"/>
+  
+  <include file="$(find r216_control)/launch/r216_control.launch"/>
+ 
+  <include file="$(find r216_rviz)/launch/r216_rviz.launch"/>
+
+</launch>

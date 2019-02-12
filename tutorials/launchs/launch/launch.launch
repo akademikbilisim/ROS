@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+
+  <node pkg="launhcs" type="program.py" name="o1" args="FIRST"/>
+  <node pkg="launhcs" type="program.py" name="o2" args="SECOND"/>
+  <node pkg="launhcs" type="program.py" name="o3" args="THIRD"/>
+
+</launch>

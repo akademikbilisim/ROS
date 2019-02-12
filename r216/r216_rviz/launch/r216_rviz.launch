@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="config_file" default="$(find r216_rviz)/rviz/r216.rviz"/>
+
+  <node type="rviz" pkg="rviz" name="$(anon rviz)"
+    args="-d $(arg config_file)"/>
+
+</launch>
